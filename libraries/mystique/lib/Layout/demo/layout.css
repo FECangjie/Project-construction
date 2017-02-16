@@ -1,0 +1,10 @@
+.layout-demo-row {
+  margin-top: 10px;
+}
+.layout-demo-col {
+  background-color: #bad6ee;
+  border: 1px solid #ddd;
+  border: 1px solid rgba(86, 61, 124, .2);
+  height: 30px;
+  line-height: 30px;
+}
