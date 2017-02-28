@@ -1,11 +1,11 @@
 {
-  "name": "hydra-client-hello-world ",
+  "name": "Project-construction",
   "version": "0.0.1",
-  "description": "hydra-client-hello-world",
+  "description": "Project-construction",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git@git.lianjia.com:hydra/client-hello-world.git"
+    "url": "git@github.com:FECangjie/Project-construction.git"
   },
   "author": "",
   "license": "ISC",
