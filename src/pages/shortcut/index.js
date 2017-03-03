@@ -43,8 +43,8 @@ export default class Shortcut extends React.Component {
           <Menu.Item key={'clear2'} item={'ctrl + L'}>清空控制台</Menu.Item>
         </SubMenu>
         <SubMenu title="刷新">
-          <Menu.Item key={'refresh1'} item={'f5'}>刷新</Menu.Item>
-          <Menu.Item key={'refresh2'} item={'com + R'}>强制刷新</Menu.Item>
+          <Menu.Item key={'refresh1'} item={'com + R'}>刷新</Menu.Item>
+          <Menu.Item key={'refresh2'} item={'enter'}>强制刷新</Menu.Item>
         </SubMenu>
         <SubMenu title="搜索">
           <Menu.Item key={'find1'} item={'com + F'}>搜索文本</Menu.Item>
@@ -186,9 +186,12 @@ export default class Shortcut extends React.Component {
               <li></li>
               <li></li>
               <li></li>
+              <li               className={this.state.shortcut.key.indexOf('Down')!==-1?"actived":""}
+></li>
               <li></li>
-              <li></li>
-              <li></li>
+              <li
+              className={this.state.shortcut.key.indexOf('Up')!==-1?"actived":""}
+              ></li>
             </ul>
           </div>
           <Link to="/test">

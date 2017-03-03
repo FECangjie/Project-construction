@@ -17,8 +17,8 @@ model({
     minus (state, {num}) {
       return {...state, count: state.count - num}
     },
-    test () {
-      alert(1)
+    test (state, {n}) {
+      alert('n等于'+n)
     }
   }
 })
@@ -29,13 +29,9 @@ export default connect( ({about}) => ({about}) )( props => {
       <Header path={props.location.pathname}/>
       <div className="greeting">演示页面</div>
       <div className="demo-wrap">
-        <p className="demo">$ === querySelector, $$ === querySelectAll</p>
-        <p className="demo">document.body.contentEditable=true</p>
-        <p className="demo" id="demo" onClick={ () => props.dispatch({type: 'about.test'}) }>getEventListeners($('selector')).eventName[0].listener & monitorEvents unmonitorEvents</p>
-        <p className="demo">time, table</p>
-        <p className="demo">dir</p>
-        <p className="demo">document.body.contentEditable=true</p>
-        <p className="demo">document.body.contentEditable=true</p>
+        <p className="demo"><a className="a-demo b-demo c-demo d-demo">一个超链接</a></p>
+        <p className="demo">两行文本</p>
+        <p className="demo" id="demo" onClick={ () => props.dispatch({type: 'about.test',n:1}) }><span className=" am">点我</span></p>
 
       </div>
       <div>{props.about.count}</div>
