@@ -16,6 +16,51 @@ export default class Shortcut extends React.Component {
         key: []
       }
     }
+    me.versionCompare('v1.1.2','v1.1.1')
+  }
+
+  /**
+   * compare version
+   */
+  versionCompare () {
+    let versions = [], verNum = []
+    let flag = true
+    for (let i=0;i<arguments.length;i++) {
+      versions.push(arguments[i])
+    }
+    if (versions.length > 1) { // 校验参数长度
+      verNum = versions.map((item, index) => { // 参数遍历
+          if(/^[Vv]([0-9]+[\-.])*[0-9]+$/.test(item)) { // 校验输入
+            return item.replace(/[^0-9\-.]/ig,"") // 格式转换
+          } else {
+            alert(item + '格式错误，请输入正确格式版本号（如v1.1.1）。') // 提示
+            flag = false
+            return 0
+          }
+        })
+    } else {
+      flag = false
+    }
+    if (!flag) {
+      return // 校验不通过，函数结束
+    }
+    function compare (v1, v2) { // 核心方法 比较两个版本号
+      let a1 = v1.split('.')
+      let a2 = v2.split('.')
+      let result = true // 当前版本号‘守擂’
+      a1.every((item, index) => { // 从左到右遍历比较版本大小
+        if (parseInt(a1[index]) < parseInt(a2[index])) {
+          result = false // ‘守擂’失败..
+          return false
+        }
+      })
+      return result // 返回比较结果
+    }
+    let lastVersion = 0 // 最终版本号
+    verNum.forEach((item, index) => {
+      lastVersion = compare(verNum[lastVersion],verNum[index]) ? lastVersion : index // 1v1比较版本号
+    })
+    alert('最终版本号：' + arguments[lastVersion])
   }
 
   /**
