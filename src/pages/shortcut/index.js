@@ -16,51 +16,93 @@ export default class Shortcut extends React.Component {
         key: []
       }
     }
-    me.versionCompare('v1.1.2','v1.1.1')
+    // me.versionCompare('v1.1.1', 'v2.0.1', 'v1.98.1', 'V2.1.0', 'v0.99.99') // 测试用例
+    console.log(me.isDayLightTime())
   }
+
+
+/*!
+ *判断一个时间是否在夏令时
+ */
+ isDayLightTime () {
+    var now = new Date('1990-05-05');
+    var start = new Date();
+    debugger
+
+    //得到一年的开始时间
+    start.setMonth(0);
+    start.setDate(1);
+    start.setHours(0);
+    start.setMinutes(0);
+    start.setSeconds(0);
+
+    var middle = new Date(start.getTime());
+    middle.setMonth(6);
+
+    var margin = 0;
+    if(isEastEarthTime())
+    {
+        margin = start.getTimezoneOffset();
+    }
+    else
+    {
+        margin = middle.getTimezoneOffset();
+    }
+    if(now.getTimezoneOffset() == margin)
+    {
+        return true;
+    }
+    return false;
+}
+
 
   /**
    * compare version
    */
   versionCompare () {
     let versions = [], verNum = []
+    let errorText = '' // 友好提示
     let flag = true
     for (let i=0;i<arguments.length;i++) {
       versions.push(arguments[i])
     }
-    if (versions.length > 1) { // 校验参数长度
+    if (versions.length > 1) { // 1。校验参数长度
       verNum = versions.map((item, index) => { // 参数遍历
           if(/^[Vv]([0-9]+[\-.])*[0-9]+$/.test(item)) { // 校验输入
-            return item.replace(/[^0-9\-.]/ig,"") // 格式转换
+            return item.replace(/[^0-9\-.]/ig,"") // 格式转换 剔除版本号前缀等。。
           } else {
-            alert(item + '格式错误，请输入正确格式版本号（如v1.1.1）。') // 提示
+            errorText = item + '格式错误，请输入正确格式版本号。' // 提示
             flag = false
             return 0
           }
         })
     } else {
+      errorText = '请输入2个或2个以上版本号' // 提示
       flag = false
     }
     if (!flag) {
-      return // 校验不通过，函数结束
+      alert(errorText || '存在错误输入。')
+      return // 校验不通过，函数over
     }
     function compare (v1, v2) { // 核心方法 比较两个版本号
       let a1 = v1.split('.')
       let a2 = v2.split('.')
       let result = true // 当前版本号‘守擂’
       a1.every((item, index) => { // 从左到右遍历比较版本大小
-        if (parseInt(a1[index]) < parseInt(a2[index])) {
-          result = false // ‘守擂’失败..
-          return false
+        if (parseInt(a1[index]) === parseInt(a2[index])) { // 回合平手 继续下一回合
+          return true
+        } else {
+          result = parseInt(a1[index]) < parseInt(a2[index]) ? false : true // 判断‘守擂’结果
         }
+        return false // 比赛结束
       })
       return result // 返回比较结果
     }
     let lastVersion = 0 // 最终版本号
     verNum.forEach((item, index) => {
-      lastVersion = compare(verNum[lastVersion],verNum[index]) ? lastVersion : index // 1v1比较版本号
+      lastVersion = compare(verNum[lastVersion],verNum[index]) ? lastVersion : index // 2。1v1比较版本号
     })
-    alert('最终版本号：' + arguments[lastVersion])
+    alert('最终版本号：' + arguments[lastVersion]) // 3.输出结果 函数结束
   }
 
   /**
